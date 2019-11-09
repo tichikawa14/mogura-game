@@ -76,6 +76,14 @@
 </head>
 
 <body id="game">
+	<header>
+		<div>
+			<p>
+				得点:<span id="score">0</span>
+				残り時間:<span id="timecount">30</span>
+			</p>
+		</div>
+	</header>
 	<div class="field">
 		<h1><img src="images/title.png" alt=""></h1>
 		<div class="container">
@@ -133,13 +141,13 @@
 		// 定期的にモグラを出す
 		deruID = setInterval(deruMogura, 1000);
 
-		let count = 0; //カウントの初期値
+		let count = 30; //カウントの初期値
 		timerID = setInterval('countup()',1000); //1秒毎にcountup()を呼び出し
 
 		function countup() {
-			count++;
-			console.log(count);
-			if (count == 30) {
+			count--;
+			document.getElementById("timecount").innerText = count;
+			if (count == 0) {
 				clearInterval(timerID);
 				clearInterval(deruID);
 				kakureruAllMogura(moguras);
@@ -158,6 +166,7 @@
 			score++;
 			console.log("得点" + score);
 			setTimeout(kakureruMogura, 1000, mogura); 
+			document.getElementById("score").innerText = score;
 		}
 
 		// もぐらが戻る
