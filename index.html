@@ -81,49 +81,114 @@
 		<div class="container">
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
-			</div>
-		</div>
-		<div class="container">
-			<div class="relative">
-				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
-			</div>
-			<div class="relative">
-				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
-			</div>
-			<div class="relative">
-				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 		</div>
 		<div class="container">
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 			<div class="relative">
 				<img class="ana" src="images/穴.png">
-				<img class="mogura uwagaki" src="images/モグ2.png">
+				<img class="mogura uwagaki" src="">
+			</div>
+		</div>
+		<div class="container">
+			<div class="relative">
+				<img class="ana" src="images/穴.png">
+				<img class="mogura uwagaki" src="">
+			</div>
+			<div class="relative">
+				<img class="ana" src="images/穴.png">
+				<img class="mogura uwagaki" src="">
+			</div>
+			<div class="relative">
+				<img class="ana" src="images/穴.png">
+				<img class="mogura uwagaki" src="">
 			</div>
 		</div>
 	</div>
-
+​
 	<script>
-		// ここにJavaScriptを書く
+		// 全てのもぐらに、クリックイベントを登録する
+		const moguras = document.querySelectorAll(".mogura");
+		const itaiMogura = "images/モグ1.png";
+		const normalMogura = "images/モグ2.png";
+
+		let score = 0;
+
+		// 定期的にモグラを出す
+		deruID = setInterval(deruMogura, 1000);
+
+		let count = 0; //カウントの初期値
+		timerID = setInterval('countup()',1000); //1秒毎にcountup()を呼び出し
+
+		function countup() {
+			count++;
+			console.log(count);
+			if (count == 30) {
+				clearInterval(timerID);
+				clearInterval(deruID);
+				kakureruAllMogura(moguras);
+			}
+		}
+
+		for (let i = 0; i < moguras.length; i++) {
+			const element = moguras[i];
+			element.onclick = hitMogura;
+		}
+
+		// もぐらが叩かれる
+		function hitMogura(){
+			var mogura = event.target;
+			mogura.src = itaiMogura;
+			score++;
+			console.log("得点" + score);
+			setTimeout(kakureruMogura, 1000, mogura); 
+		}
+
+		// もぐらが戻る
+		function modoruMogura(mogura){
+			mogura.src = normalMogura;
+			setTimeout(kakureruMogura, 100, mogura);
+		}
+
+		function kakureruMogura(mogura) {
+			mogura.src = "";
+		}
+
+		function kakureruAllMogura(moguras) {
+			for (let i = 0; i < moguras.length; i++) {
+				moguras[i].src = ""
+			}
+		}
+
+		// ランダムにモグラを出す
+		function deruMogura(){
+			var random = Math.floor(Math.random() * 9);
+			mogura = moguras[random]
+			mogura.src = normalMogura
+
+			// 出たもぐらを隠す
+			setTimeout((mogura) => {
+				if(mogura.src.indexOf(normalMogura)) {
+					kakureruMogura(mogura);
+				}
+			}, 8000, mogura);
+		}
 	</script>
 </body>
 
